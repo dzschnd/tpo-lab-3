@@ -3,13 +3,10 @@ package ru.itmo.scs.pages;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.*;
 
-/**
- * Created by i.isaev on 14.04.2021.
- */
 public class HomePage extends Page {
 
     public HomePage(WebDriver driver) {
-       super(driver);
+        super(driver);
     }
 
     public String getTitle() {
@@ -19,7 +16,7 @@ public class HomePage extends Page {
         element.sendKeys("Selenium");
         element.submit();
 
-        (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
+        (new WebDriverWait(driver, java.time.Duration.ofSeconds(60))).until(new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver d) {
                 return d.getTitle().toLowerCase().startsWith("selenium");
             }

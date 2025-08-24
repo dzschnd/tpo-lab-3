@@ -6,9 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.PageFactory;
-import ru.itmo.scs.*;
-import ru.itmo.scs.exceptions.InvalidPropertiesException;
-import ru.itmo.scs.utils.Properties;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,33 +19,22 @@ public class HomePageTest {
 
     private static final Logger logger = Logger.getLogger(HomePageTest.class);
 
-    public Context context;
     public List<WebDriver> driverList;
 
     @BeforeEach
     public void setUp() {
-        context = new Context();
         driverList = new ArrayList<>();
-        try {
-            Properties.getInstance().reading(context);
-        } catch (IllegalArgumentException e) {
-            logger.error(e.getMessage());
-        }
 
-        if (context.getGeckodriver() != null) {
-            System.setProperty(Constants.WEBDRIVER_FIREFOX_DRIVER, context.getGeckodriver());
-            driverList.add(new FirefoxDriver());
-        }
-        if (context.getChromedriver() != null) {
-            System.setProperty(Constants.WEBDRIVER_CHROME_DRIVER, context.getChromedriver());
-            driverList.add(new ChromeDriver());
-        }
-        if (driverList.isEmpty()) throw new InvalidPropertiesException();
+        WebDriverManager.chromedriver().setup();
+        driverList.add(new ChromeDriver());
+
+        WebDriverManager.firefoxdriver().setup();
+        driverList.add(new FirefoxDriver());
     }
 
     @BeforeEach
     public void tearDown() {
-//        driverList.forEach(WebDriver::quit);
+        // driverList.forEach(WebDriver::quit);
     }
 
     @Test
