@@ -5,20 +5,19 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.openqa.selenium.support.PageFactory;
 
-import constants.Constants;
 import pages.HomePage;
+import utils.Constants;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-public class LoadPageTest extends BaseTest {
+public class AuthTest extends BaseTest {
 
     @ParameterizedTest
     @EnumSource(Browser.class)
     @Execution(ExecutionMode.CONCURRENT)
-    void getTitleTest(Browser browser) {
+    void login(Browser browser) {
         setUp(browser);
+        driver.get(Constants.BASE_URL);
         HomePage home = PageFactory.initElements(driver, HomePage.class);
-        home.open();
-        assertTrue(driver.getCurrentUrl().startsWith(Constants.BASE_URL));
+        home.confirmLocation();
+        home.login("+71234567890");
     }
 }

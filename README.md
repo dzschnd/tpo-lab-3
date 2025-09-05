@@ -1,3 +1,5 @@
 # Тестирование программного обеспечения
 
-## Вариант: https://www.aviasales.com/
+## Вариант
+
+https://www.aviasales.com/
